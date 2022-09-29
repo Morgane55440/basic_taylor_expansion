@@ -20,7 +20,7 @@ def polynomial_approx(E_list_i,n,a):
 
 """
 what we need:  (derivative)
-e_sum(a,b,c,....)    (e_sum(da,db,dc,....) 
+e_sum(a,b,c,....)    (e_sum(da,db,dc,....) )
 e_product(a,b,c,....)    (e_sum(e_product(da,b,c,....),e_product(a,db,c,....),e_product(a,b,dc,....),.....))
 e_pow(u,c)"u^c"    (e_product(du,c,e_pow(u,e_sum(c,-1))))
 specifics:  (derivative)
@@ -146,7 +146,7 @@ def constant_factorisation(term_list_i):
         if type(term_list[j-l])==list and term_list[j-l][0]=="product":
             if len(term_list[j-l][1])==2 and term_list[j-l][1][1]==1:
                 term_list[j-l]=term_list[j-l][1][0]
-            elif term_list[j-l][1][-1]==0:   # le elif est dû au dernier [1] qui ressort out of range si la première acion a été effectuée et term_list[j-l][1][0] est un seul élément.
+            elif term_list[j-l][1][-1]==0:   # le elif est dût au dernier [1] qui ressort out of range si la première acion a été effectuée et term_list[j-l][1][0] est un seul élément.
                 term_list.pop(j)
     Help_print("cfa : ",term_list)
     if start==term_list:
