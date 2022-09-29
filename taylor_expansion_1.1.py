@@ -49,6 +49,10 @@ example:
     sin(2x)*(e**(x^2))+(x-3)*(x+1):
         ["sum",[["product",[["e_sin",["product",["x",2]]],["e_exp",["e_pow",["x",2]]]]],["product",[["sum",["x",-3]],["sum",["x",1]]]]]]
 """
+
+
+
+
 def derivate(E_list_i):
     E_list=deepcopy(E_list_i)
     E_list=Simplify(E_list)
@@ -84,6 +88,10 @@ def derivate(E_list_i):
         return Simplify(["product",[derivate(E_list[1]),["cos",E_list[1]]]])
     if E_list[0]=="ln":
         return Simplify(["product",[derivate(E_list[1]),["power",[E_list[1],-1]]]])
+
+
+
+
 def term_simplification(term_list_i):
     term_list=deepcopy(term_list_i)
     for k in range(len(term_list)):
@@ -91,6 +99,10 @@ def term_simplification(term_list_i):
         term_list[k]=Simplify(term_list[k])
         Help_print("si2 : ",term_list[k])
     return term_list
+
+
+
+
 def Simplify_sum_constant(term_list_i):
     term_list=deepcopy(term_list_i)
     c_sum=0
@@ -103,6 +115,10 @@ def Simplify_sum_constant(term_list_i):
     if c_sum!=0:
         term_list.append(c_sum)
     return term_list
+
+
+
+
 def Simplify_sum_dupes(term_list_i):  #prend comme entrée une suite de termes dont seul le dernier est une constante
     term_list=deepcopy(term_list_i)
     analysis=[]
@@ -123,6 +139,10 @@ def Simplify_sum_dupes(term_list_i):  #prend comme entrée une suite de termes d
             term_list.append(["product",dupe_group])
     Help_print("sde : ",term_list)
     return term_list
+
+
+
+
 def constant_factorisation(term_list_i):
     term_list=deepcopy(term_list_i)
     start=deepcopy(term_list)
@@ -152,6 +172,10 @@ def constant_factorisation(term_list_i):
     if start==term_list:
         return start
     return constant_factorisation(term_list)
+
+
+
+
 def Simplify_product_constant(factor_list_i):
     factor_list=deepcopy(factor_list_i)
     Help_print("spc : ",factor_list)
@@ -167,6 +191,10 @@ def Simplify_product_constant(factor_list_i):
             factor_list.append(c_product)
         return factor_list
     return []
+
+
+
+
 def Simplify_product_dupes(factor_list_i):
     factor_list=deepcopy(factor_list_i)
     analysis=[]
@@ -187,6 +215,10 @@ def Simplify_product_dupes(factor_list_i):
             factor_list.append(["power",dupe_group])
     Help_print("sde : ",factor_list)
     return factor_list
+
+
+
+
 def base_grouping(factor_list_i):
     factor_list=deepcopy(factor_list_i)
     start=deepcopy(factor_list)
@@ -222,6 +254,10 @@ def base_grouping(factor_list_i):
     if start==factor_list:
         return start
     return constant_factorisation(factor_list)
+
+
+
+
 def sub_deconstruction(term_list_i,operation_type):
     term_list=deepcopy(term_list_i)
     l=len(term_list)
@@ -234,6 +270,10 @@ def sub_deconstruction(term_list_i,operation_type):
     if sub_terms==[]:
         return term_list
     return sub_deconstruction(term_list,operation_type)
+
+
+
+
 def Simplify_exp(factor_list_i):
     factor_list=deepcopy(factor_list_i)
     l=len(factor_list)
@@ -247,6 +287,10 @@ def Simplify_exp(factor_list_i):
             exp_list=[Simplify(["sum",exp_list])]
         factor_list.insert(0,["exp",exp_list[0]]) #le but ici est de garder la constante à la fin du produit, bien qu'il me semble que ce soit innnutile, ça ne coûte rien
     return factor_list
+
+
+
+
 def Simplify(E_list_i):
     E_list=deepcopy(E_list_i)
     if isconstant(E_list) or type(E_list)==str:
@@ -285,13 +329,16 @@ def Simplify(E_list_i):
                 if E_list[0]==function[0]:
                     return function[1](E_list[1])
         return[E_list[0],Simplify(E_list[1])]
-        
-        
+
+
+
+
 def isconstant(ai):
-    a=deepcopy(ai)   #probablement redundant
-    if type(a)==int or type(a)==float:
-        return True
-    return False
+    return (type(a)==int or type(a)==float)
+
+
+
+
 def unordered_eq(element_1_i,element_2_i):
     element_1=deepcopy(element_1_i)
     element_2=deepcopy(element_2_i)
@@ -307,9 +354,11 @@ def unordered_eq(element_1_i,element_2_i):
             element_2.remove(element)
         else:
             return False
-    if element_2==[]:
-        return True
-    return False
+    return (element_2==[])
+
+
+
+
 def text_equation(E_list_i):
     E_list=deepcopy(E_list_i)
     if type(E_list)==str:
@@ -338,9 +387,17 @@ def text_equation(E_list_i):
         return "("+text_equation(E_list[1][0])+"^"+text_equation(E_list[1][1])+")"
     if E_list[0] in ["exp","ln","sin","cos"]:
         return E_list[0]+"("+text_equation(E_list[1])+")"
-def Help_print(*text):
+
+
+
+
+def Help_print(*text): #best function ever
     if Debugging:
         print(*text)
+
+
+
+
 def Compute(E_list_i,x):
     E_list=deepcopy(E_list_i)
     if E_list=="x":
@@ -362,13 +419,18 @@ def Compute(E_list_i,x):
     for function in [["exp",math.exp],["ln",math.log],["sin",math.sin],["cos",math.cos]]:
         if E_list[0]==function[0]:
             return function[1](Compute(E_list[1],x))
-    
+
+
+
+
 def Develop_polynomial(polynomial_i):
     polynomial=deepcopy(polynomial)
     if type(polynomial)==list and polynomial[0]=="sum":
         for k in range(len(polynomial[1])):
             if polynomial[1][k][0]=="product":
                 a
+                
+                #WTF is happening here
         
                 
                 
